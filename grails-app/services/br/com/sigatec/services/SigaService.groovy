@@ -1,5 +1,6 @@
 package br.com.sigatec.services
 
+import br.com.sigatec.business.Aluno
 import br.com.sigatec.connector.SigaWebConnector
 import br.com.sigatec.parser.LoginParser
 import org.springframework.beans.factory.annotation.Autowired
@@ -30,5 +31,8 @@ class SigaService {
 
         def loginPlace = connector.post("https://www.sigacentropaulasouza.com.br/aluno/login.aspx",mapLogin)
         def notas = connector.get("https://www.sigacentropaulasouza.com.br/aluno/notasparciais.aspx")
+
+        Aluno aluno = new Aluno()
+
     }
 }
