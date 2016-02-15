@@ -45,6 +45,29 @@ class SigaParserSpec extends Specification {
         assertEquals("Faculdade de Tecnologia do Ipiranga", student.faculdade)
     }
 
+    def 'extract disciplines informations'(){
+        when:
+        File file = new ClassPathResource("resources/aluno.json").getFile()
+        JSONObject json = jsonSlurper.parseText(FileUtils.readFileToString(file))
+        def disciplinesInformations = service.extractDisciplines(json)
+
+        then:
+        //TODO TESTAR DIREITO
+        assertEquals(7,disciplinesInformations.size)
+
+    }
+
+    def 'extract disciplines results'(){
+        when:
+        File file = new ClassPathResource("resources/disciplina.json").getFile()
+        JSONObject json = jsonSlurper.parseText(FileUtils.readFileToString(file))
+        def disciplineResults = service.extractDisciplinesResults(json)
+
+        then:
+        //TODO TESTAR DIREITO
+        assertEquals(3,disciplineResults.size)
+
+    }
 
 
     def setup(){

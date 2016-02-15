@@ -1,0 +1,76 @@
+{
+  "ACD_AlunoId":98450,
+  "UNI_UnidadeId":204,
+  "ACD_CursoId":24,
+  "ACD_Periodoid":3,
+  "ACD_EstruturaCurricularId":504,
+  "ACD_DisciplinaSigla":"YAD115",
+  "ACD_DisciplinaNome":"Laboratório de Banco de Dados",
+  "ACD_AlunoHistoricoItemId":1,
+  "ACD_AlunoHistoricoItemPeriodoOferecimentoId":20161,
+  "ACD_AlunoHistoricoItemMediaFinal":0.0,
+  "ACD_AlunoHistoricoItemQtdFaltas":0,
+  "ACD_AlunoHistoricoItemFrequencia":0.00,
+  "ACD_AlunoHistoricoTipoObservacaoId":2,
+  "ACD_AlunoHistoricoItemUnidadeId":204,
+  "ACD_AlunoHistoricoItemPeriodoId":3,
+  "ACD_AlunoHistoricoItemCursoId":24,
+  "ACD_AlunoHistoricoItemEstruturaCurricularId":504,
+  "ACD_AlunoHistoricoItemDesistenciaData":"0000-00-00",
+  "ACD_AlunoHistoricoItemTurmaId":1,
+  "ACD_AlunoHistoricoTipoMatriculaSituacaoId":1,
+  "ACD_AlunoHistoricoItemProfessorId":1184,
+  "GER_TipoMotivoDeleteId":0,
+  "ACD_AlunoHistoricoItemAprovada":0,
+  "ACD_AlunoHistoricoItemFlagImportacao":0,
+  "ACD_AlunoHistoricoItemDisciplinaSigla":"",
+  "ACD_AlunoHistoricoItemTipoDisciplina":0,
+  "Avaliacoes":[
+    {
+      "ACD_PlanoEnsinoAvaliacaoId":1250533,
+      "ACD_PeriodoOferecimentoId":20161,
+      "ACD_ProfessorId":1184,
+      "ACD_PlanoEnsinoAvaliacaoTitulo":"P1",
+      "ACD_PlanoEnsinoAvaliacaoDescricao":"P1",
+      "ACD_PlanoEnsinoAvaliacaoObjetivo":"Avaliar conhecimentos de SQL DML e DDL",
+      "ACD_PlanoEnsinoAvaliacaoSufixo":"P1",
+      "ACD_PlanoEnsinoAvaliacaoPeso":"1",
+      "ACD_PlanoEnsinoAvaliacaoDataPrevista":"2016-04-18T07:59:00",
+      "ACD_PlanoEnsinoAvaliacaoDataProva":"0000-00-00T00:00:00",
+      "ACD_PlanoEnsinoAvaliacaoDataPublicacao":"0000-00-00T00:00:00",
+      "Notas":[
+      ]
+    },
+    {
+      "ACD_PlanoEnsinoAvaliacaoId":1250534,
+      "ACD_PeriodoOferecimentoId":20161,
+      "ACD_ProfessorId":1184,
+      "ACD_PlanoEnsinoAvaliacaoTitulo":"P2",
+      "ACD_PlanoEnsinoAvaliacaoDescricao":"P2",
+      "ACD_PlanoEnsinoAvaliacaoObjetivo":"Avaliar conhecimentos de PL/SQL",
+      "ACD_PlanoEnsinoAvaliacaoSufixo":"P2",
+      "ACD_PlanoEnsinoAvaliacaoPeso":"1",
+      "ACD_PlanoEnsinoAvaliacaoDataPrevista":"2016-06-13T07:59:00",
+      "ACD_PlanoEnsinoAvaliacaoDataProva":"0000-00-00T00:00:00",
+      "ACD_PlanoEnsinoAvaliacaoDataPublicacao":"0000-00-00T00:00:00",
+      "Notas":[
+      ]
+    },
+    {
+      "ACD_PlanoEnsinoAvaliacaoId":1250535,
+      "ACD_PeriodoOferecimentoId":20161,
+      "ACD_ProfessorId":1184,
+      "ACD_PlanoEnsinoAvaliacaoTitulo":"P3",
+      "ACD_PlanoEnsinoAvaliacaoDescricao":"P3",
+      "ACD_PlanoEnsinoAvaliacaoObjetivo":"Avaliar conhecimentos de SQL e PL/SQL\n",
+      "ACD_PlanoEnsinoAvaliacaoSufixo":"P3",
+      "ACD_PlanoEnsinoAvaliacaoPeso":"1",
+      "ACD_PlanoEnsinoAvaliacaoDataPrevista":"2016-06-27T08:00:00",
+      "ACD_PlanoEnsinoAvaliacaoDataProva":"0000-00-00T00:00:00",
+      "ACD_PlanoEnsinoAvaliacaoDataPublicacao":"0000-00-00T00:00:00",
+      "Notas":[
+      ]
+    }
+  ],
+  "ACD_PlanoEnsinoPublicoFlag":0
+}

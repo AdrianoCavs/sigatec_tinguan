@@ -1,6 +1,8 @@
 package br.com.sigatec.parser
 
 import br.com.sigatec.business.Aluno
+import br.com.sigatec.business.Disciplina
+import br.com.sigatec.business.Nota
 import groovy.json.JsonSlurper
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -42,6 +44,44 @@ class SigaParser {
         aluno.setCurso(json.vACD_CURSONOME_MPAGE)
         aluno.setFaculdade(json.vUNI_UNIDADENOME_MPAGE)
         return aluno
+    }
+
+    def extractDisciplines(json){
+        List<Disciplina> disciplinas = new ArrayList<Disciplina>()
+        json.Acd_alunonotasparciais_sdt.each{ j ->
+            Disciplina disciplina = new Disciplina()
+            disciplina.setNome(j.ACD_DisciplinaNome.toString())
+            disciplina.setFaltas(j.ACD_AlunoHistoricoItemQtdFaltas.toString())
+            disciplina.setMedia(j.ACD_AlunoHistoricoItemMediaFinal.toString())
+            disciplina.setNotas(this.extractDisciplinesResults(j))
+            disciplinas.add(disciplina)
+        }
+        return disciplinas
+    }
+
+    def extractDisciplinesResults(json){
+        List<Nota> notas = new ArrayList<Nota>()
+        json.Avaliacoes.each{j ->
+            Nota nota = new Nota()
+            nota.setNome(j.ACD_PlanoEnsinoAvaliacaoTitulo.toString())
+            //TODO VER PADRÃO DO ARRAY DE NOTAS QUANDO ALGUM PROFESSOR LANCAR ALGUMA
+            if(!j.Notas.toString().equals("[]")){
+                nota.setNota(j.Notas.toString())
+            } else {
+                nota.setNota("0.0")
+            }
+            notas.add(nota)
+        }
+
+        //TODO CHECKAR COM O FRONT QUANDO NAO HAVER AVALIACOES
+        /*
+        if (notas.size() == 0){
+            Nota nota = new Nota()
+            nota.setNota("0.0")
+            notas.add(nota)
+        }
+        */
+        return notas
     }
 
 

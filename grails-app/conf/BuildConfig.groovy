@@ -44,6 +44,7 @@ grails.project.dependency.resolution = {
         compile 'org.apache.httpcomponents:httpclient:4.5.1'
         test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
         compile "commons-io:commons-io:2.2"
+        compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
         // runtime 'mysql:mysql-connector-java:5.1.22'
     }
 

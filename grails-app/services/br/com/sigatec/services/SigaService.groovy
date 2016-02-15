@@ -4,6 +4,8 @@ import br.com.sigatec.business.Aluno
 import br.com.sigatec.business.Disciplina
 import br.com.sigatec.connector.SigaWebConnector
 import br.com.sigatec.parser.SigaParser
+import br.com.sigatec.utils.JSONResponse
+import grails.converters.JSON
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
@@ -19,11 +21,9 @@ class SigaService {
     @Autowired
     private SigaParser parser
 
-    private Map<String, String> cookies
 
     @Autowired
     public SigaService (){
-        this.cookies = new HashMap<String, String>()
     }
 
     def auth(String login, String password) {
@@ -37,10 +37,11 @@ class SigaService {
 
         Aluno aluno = new Aluno()
         parser.extractStudentBasicInformations(aluno, studentHistoryJson)
-
-        List<Disciplina> disciplinas = new ArrayList<Disciplina>()
-
-
-
+        def disciplinas = parser.extractDisciplines(studentHistoryJson)
+        aluno.setDisciplinas(disciplinas)
+        def response = JSONResponse.objectAsJSON(aluno)
+        //response = response + JSONResponse.arrayOfObjectAsJSON(disciplinas)
+        log.info("END")
+        return response
     }
 }

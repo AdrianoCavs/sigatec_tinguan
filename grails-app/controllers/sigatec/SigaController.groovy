@@ -14,7 +14,7 @@ class SigaController {
             String login = param.login
             String password = param.password
             def response = sigaService.auth(login, password)
-            log.info("")
+            render(contentType:"text/json", encoding:"UTF-8") { json: prepareJsonResponse(response) }
         } catch (IllegalStateException e){
             log.info("Unexpected exception at auth siga")
             response.status = 401
@@ -24,5 +24,10 @@ class SigaController {
             response.status = 500
             render e.getMessage()
         }
+    }
+
+    def prepareJsonResponse(json){
+        request.jsonResponse = json
+        return json
     }
 }
