@@ -1,5 +1,5 @@
 import br.com.sigatec.connector.SigaWebConnector
-import br.com.sigatec.parser.LoginParser
+import br.com.sigatec.parser.SigaParser
 
 // Place your Spring DSL code here
 beans = {
@@ -8,7 +8,7 @@ beans = {
         bean.singleton = false
     }
 
-    loginParser(LoginParser) { bean ->
+    loginParser(SigaParser) { bean ->
         bean.scope = 'request'
         bean.singleton = false
     }
