@@ -30,8 +30,10 @@ class SigaParser {
 
         try{
             Element element = document.select("div input").last()
+            String json = element.attributes()["value"]
+            json = json.replace("\\>", "\\\\>")
             def jsonSlurper = new JsonSlurper()
-            return jsonSlurper.parseText(element.attributes()["value"].toString())
+            return jsonSlurper.parseText(json)
 
         } catch (Exception e){
             throw new Exception(e)
@@ -68,19 +70,10 @@ class SigaParser {
             if(!j.Notas.toString().equals("[]")){
                 nota.setNota(j.Notas.toString())
             } else {
-                nota.setNota("0.0")
+                nota.setNota(null)
             }
             notas.add(nota)
         }
-
-        //TODO CHECKAR COM O FRONT QUANDO NAO HAVER AVALIACOES
-        /*
-        if (notas.size() == 0){
-            Nota nota = new Nota()
-            nota.setNota("0.0")
-            notas.add(nota)
-        }
-        */
         return notas
     }
 
