@@ -4,6 +4,14 @@ jdk:
 branches:
   only:
     - master
+
+before_install:
+  - curl -s get.sdkman.io | bash
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+  - sdk version
+  - sdk install gradle
+  - sdk install grails 2.2.2
+  
 script: 
   - grails refresh-dependencies
   - grails test-app unit:
