@@ -9,8 +9,8 @@ before_install:
   - curl -s get.sdkman.io | bash
   - source "$HOME/.sdkman/bin/sdkman-init.sh"
   - sdk version
-  - sdk install gradle
-  - sdk install grails 2.2.2
+  - sdk install gradle -y
+  - sdk install grails 2.2.2 -y
   
 script: 
   - grails refresh-dependencies
