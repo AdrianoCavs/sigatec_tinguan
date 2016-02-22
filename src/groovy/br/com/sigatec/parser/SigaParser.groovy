@@ -77,5 +77,9 @@ class SigaParser {
         return notas
     }
 
+    def isInvalidPassword(String html){
+        return html.contains("confere Login e Senha")
+    }
+
 
 }

@@ -10,6 +10,7 @@ import spock.lang.Specification
 
 import static junit.framework.Assert.assertEquals
 import static junit.framework.Assert.assertNotNull
+import static junit.framework.Assert.assertTrue
 
 /**
  * Created by tinguan on 15/02/16.
@@ -45,6 +46,18 @@ class SigaParserSpec extends Specification {
         assertEquals("Faculdade de Tecnologia do Ipiranga", student.faculdade)
     }
 
+
+    def 'is Invalid Password'(){
+        when:
+        File file = new ClassPathResource("resources/invalidPassword.html").getFile()
+        String html = FileUtils.readFileToString(file)
+        def isInvalidPassword = service.isInvalidPassword(html)
+
+        then:
+        assertTrue(isInvalidPassword)
+    }
+
+
     def 'extract disciplines informations'(){
         when:
         File file = new ClassPathResource("resources/aluno.json").getFile()
@@ -52,8 +65,8 @@ class SigaParserSpec extends Specification {
         def disciplinesInformations = service.extractDisciplines(json)
 
         then:
-        //TODO TESTAR DIREITO
         assertEquals(7,disciplinesInformations.size)
+        assertEquals("Laboratório de Banco de Dados", disciplinesInformations.get(0).nome)
 
     }
 
@@ -64,8 +77,9 @@ class SigaParserSpec extends Specification {
         def disciplineResults = service.extractDisciplinesResults(json)
 
         then:
-        //TODO TESTAR DIREITO
         assertEquals(3,disciplineResults.size)
+        assertEquals("P1", disciplineResults.get(0).nome)
+        assertEquals(null, disciplineResults.get(0).nota)
 
     }
 
