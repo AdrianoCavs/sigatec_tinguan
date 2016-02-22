@@ -15,5 +15,5 @@ before_install:
   
 script: 
   - grails refresh-dependencies
-  - grails test-app unit:
+  - grails test-app unit: SigaParserSpec
   - grails run-app -Dserver.port=7070
