@@ -66,7 +66,7 @@ class SigaParser {
         json.Avaliacoes.each{j ->
             Nota nota = new Nota()
             nota.setNome(j.ACD_PlanoEnsinoAvaliacaoTitulo.toString())
-            //TODO VER PADRÃO DO ARRAY DE NOTAS QUANDO ALGUM PROFESSOR LANCAR ALGUMA 
+            //TODO VER PADRÃO DO ARRAY DE NOTAS QUANDO ALGUM PROFESSOR LANCAR ALGUMA
             if(!j.Notas.toString().equals("[]")){
                 nota.setNota(j.Notas.toString())
             } else {
