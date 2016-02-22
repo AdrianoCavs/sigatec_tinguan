@@ -22,10 +22,4 @@ class JSONResponse {
         }
         return new JSONObject();
     }
-
-    //TODO NAO FUNCIONA
-    public  static JSONObject arrayOfObjectAsJSON(ArrayList<Object> arrayList){
-        def response =  new JSONArray(arrayList);
-        return response
-    }
 }
