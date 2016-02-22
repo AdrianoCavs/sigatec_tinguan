@@ -4,7 +4,6 @@ jdk:
 branches:
   only:
     - master
-script: ./grailsw refresh-dependencies
-  && ./grailsw "test-app unit:"
-  && ./grailsw refresh-dependencies
-  && ./grailsw "test-app functional:"
+script: grails refresh-dependencies
+  &&  grails test-app unit:
+  &&  grails run-app -Dserver.port=7070
