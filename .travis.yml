@@ -8,9 +8,10 @@ branches:
 before_install:
   - curl -s get.sdkman.io | bash
   - source "$HOME/.sdkman/bin/sdkman-init.sh"
+  - echo "sdkman_auto_answer=true" >> $HOME/.sdkman/etc/config
   - sdk version
   - sdk install gradle -y
-  - sdk install grails 2.2.2 -y
+  - sdk install grails 2.2.2
   
 script: 
   - grails refresh-dependencies
