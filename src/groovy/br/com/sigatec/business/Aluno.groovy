@@ -9,6 +9,6 @@ class Aluno {
     String ra
     String curso
     String faculdade
-    List<Disciplina> disciplinas
+    //List<Disciplina> disciplinas
 
 }

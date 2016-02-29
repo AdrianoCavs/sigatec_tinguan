@@ -9,5 +9,5 @@ class Disciplina {
     String faltas
     String media
     List<Nota> notas
-
+    String porcentagemAusencia
 }

@@ -1,5 +1,6 @@
 package sigatec
 
+import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.JSONObject
 
 class SigaController {
@@ -14,7 +15,8 @@ class SigaController {
             String login = param.login
             String password = param.password
             def response = sigaService.auth(login, password)
-            render(contentType:"text/json", encoding:"UTF-8") { json: prepareJsonResponse(response) }
+            //render(contentType:"text/json", encoding:"UTF-8") { json: prepareJsonResponse(response) }
+            render response as JSON
         } catch (IllegalStateException e){
             log.info("Unexpected exception at auth siga")
             response.status = 401

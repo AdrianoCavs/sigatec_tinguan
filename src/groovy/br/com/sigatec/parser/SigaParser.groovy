@@ -7,6 +7,7 @@ import groovy.json.JsonSlurper
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 import org.springframework.context.annotation.Scope
 
 /**
@@ -48,7 +49,7 @@ class SigaParser {
         return aluno
     }
 
-    def extractDisciplines(json){
+    def extractDisciplines(json, studentAbsencesJson, gradesClassesHtml){
         List<Disciplina> disciplinas = new ArrayList<Disciplina>()
         json.Acd_alunonotasparciais_sdt.each{ j ->
             Disciplina disciplina = new Disciplina()
@@ -56,9 +57,58 @@ class SigaParser {
             disciplina.setFaltas(j.ACD_AlunoHistoricoItemQtdFaltas.toString())
             disciplina.setMedia(j.ACD_AlunoHistoricoItemMediaFinal.toString())
             disciplina.setNotas(this.extractDisciplinesResults(j))
+            def absences = extractAbsences(studentAbsencesJson, disciplina, gradesClassesHtml)
+            disciplina.setPorcentagemAusencia(absences)
             disciplinas.add(disciplina)
         }
         return disciplinas
+    }
+
+    String extractAbsences(studentAbsencesJson, disciplina, gradesClassesHtml){
+        def calculatedValue
+        studentAbsencesJson.vFALTAS.each{ faltas ->
+            def disciplineName = faltas.ACD_DisciplinaNome.trim()
+            if (disciplineName.equals(disciplina.getNome())){
+                def abscenceNumber = faltas.TotalAusencias
+                def numberOfClasses = this.extractNumberOfClasses(gradesClassesHtml, disciplina)
+                calculatedValue = String.valueOf(calculateAbscence(abscenceNumber, numberOfClasses))
+            }
+        }
+        return calculatedValue
+
+    }
+
+    def extractNumberOfClasses(gradesClassesHtml, disciplina){
+        Document document = Jsoup.parse(gradesClassesHtml)
+        try{
+            Elements elements = document.select("table#TABLE100_MPAGE tbody tr td table tbody tr td div table tbody tr td div table tbody")
+            for(Element element : elements){
+
+                if(element.text().contains("AS:")){
+                    def className = element.select("tr td p").get(2).text()
+                    if(className.trim().equals(disciplina.getNome())){
+                        String numberOfClasses = element.select("td p").get(1).text().replace("AS:","")
+                        return numberOfClasses.trim()
+                    }
+                }
+
+            }
+        } catch(Exception e){
+            throw e
+        }
+    }
+
+    Double calculateAbscence(abscenceNumber, numberOfClasses){
+        //int abscenceValue = Integer.parseInt(abscenceNumber)
+        double value
+        if(numberOfClasses.equals("4")){
+            value = (100 * abscenceNumber) / 80
+            return value
+        }
+
+        value = (100 * abscenceNumber) / 40
+        return value
+
     }
 
     def extractDisciplinesResults(json){
