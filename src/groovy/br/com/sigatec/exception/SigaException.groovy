@@ -1,11 +1,12 @@
 package br.com.sigatec.exception
 
+import org.codehaus.groovy.grails.exceptions.GrailsException
 import org.codehaus.groovy.grails.web.json.JSONObject
 
 /**
  * Created by tinguan on 22/02/16.
  */
-class SigaException extends Exception {
+class SigaException extends GrailsException {
 
     String code
     String errorMessage

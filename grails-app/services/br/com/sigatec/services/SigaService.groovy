@@ -35,18 +35,12 @@ class SigaService {
 
     def auth(String login, String password) {
         def response = new JSONObject()
-        try{
-            crawler.login(login, password)
-            Aluno aluno = new Aluno()
-            crawler.setAluno(aluno)
-            response = ["aluno": aluno]
-            response += ["disciplinas": crawler.setDisciplina()]
 
-        } catch (InvalidPasswordException i){
-            response = sigaException.createResponse(i)
-        } catch(SigaException e){
-            response = sigaException.createResponse(e)
-        }
+        crawler.login(login, password)
+        Aluno aluno = new Aluno()
+        crawler.setAluno(aluno)
+        response = ["aluno": aluno]
+        response += ["disciplinas": crawler.setDisciplina()]
 
         return response
 
