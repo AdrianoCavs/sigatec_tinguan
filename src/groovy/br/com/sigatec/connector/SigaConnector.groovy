@@ -1,5 +1,6 @@
 package br.com.sigatec.connector
 
+import br.com.sigatec.exception.InternalErrorException
 import org.apache.commons.io.IOUtils
 import org.apache.http.HttpResponse
 import org.apache.http.NameValuePair
@@ -52,7 +53,7 @@ class SigaWebConnector {
             String body = IOUtils.toString(response.getEntity().getContent())
             return body
         } catch (Exception e){
-            throw(e)
+            throw new InternalErrorException("Erro Interno do Servidor")
         }
     }
 

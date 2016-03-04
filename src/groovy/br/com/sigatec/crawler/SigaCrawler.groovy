@@ -3,14 +3,17 @@ package br.com.sigatec.crawler
 import br.com.sigatec.business.Aluno
 import br.com.sigatec.business.Disciplina
 import br.com.sigatec.connector.SigaWebConnector
+import br.com.sigatec.exception.BlockedAccountException
 import br.com.sigatec.exception.InvalidPasswordException
 import br.com.sigatec.parser.SigaParser
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Scope
 
 /**
  * Created by tinguan on 21/02/16.
  */
+@Scope("request")
 class SigaCrawler {
     public JSONObject studentHistoryJson
 
@@ -21,7 +24,6 @@ class SigaCrawler {
     @Autowired
     private SigaParser parser
 
-
     def login(String login, String password){
         connector.get("https://www.sigacentropaulasouza.com.br/aluno/login.aspx")
         def mapLogin = parser.parseMapLogin(login,password)
@@ -29,6 +31,11 @@ class SigaCrawler {
         if(parser.isInvalidPassword(response)){
             throw new InvalidPasswordException("Não Autorizado")
         }
+        def bool = parser.isBlockedAccount(response)
+        if(bool){
+            throw new BlockedAccountException("Sua conta de acesso ao sistema encontra-se com data de expiração vencida. Entrar em contato a Diretoria Acadêmica de sua Unidade.")
+        }
+
     }
 
     def setAluno(Aluno aluno){

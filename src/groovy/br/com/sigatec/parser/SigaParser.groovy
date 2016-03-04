@@ -3,6 +3,7 @@ package br.com.sigatec.parser
 import br.com.sigatec.business.Aluno
 import br.com.sigatec.business.Disciplina
 import br.com.sigatec.business.Nota
+import br.com.sigatec.exception.InternalErrorException
 import groovy.json.JsonSlurper
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -37,7 +38,7 @@ class SigaParser {
             return jsonSlurper.parseText(json)
 
         } catch (Exception e){
-            throw new Exception(e)
+            throw new InternalErrorException("Erro Interno do Servidor")
         }
     }
 
@@ -94,12 +95,11 @@ class SigaParser {
 
             }
         } catch(Exception e){
-            throw e
+            throw new InternalErrorException("Erro Interno do Servidor")
         }
     }
 
     Double calculateAbscence(abscenceNumber, numberOfClasses){
-        //int abscenceValue = Integer.parseInt(abscenceNumber)
         double value
         if(numberOfClasses.equals("4")){
             value = (100 * abscenceNumber) / 80
@@ -129,6 +129,10 @@ class SigaParser {
 
     def isInvalidPassword(String html){
         return html.contains("confere Login e Senha")
+    }
+
+    def isBlockedAccount(String html){
+        return html.contains("Sua conta de acesso ao sistema encontra-se bloqueada por tentativas de acesso")
     }
 
 
