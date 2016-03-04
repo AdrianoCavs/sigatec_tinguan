@@ -132,7 +132,11 @@ class SigaParser {
     }
 
     def isBlockedAccount(String html){
-        return html.contains("Sua conta de acesso ao sistema encontra-se bloqueada por tentativas de acesso")
+        return html.contains("Sua conta de acesso ao sistema encontra-se bloqueada por tentativas de acesso") || html.contains("vencida. Entrar em contato")
+    }
+
+    def isSuccess(String html){
+        return html.contains("vACD_CURSONOME_MPAGE")
     }
 
 

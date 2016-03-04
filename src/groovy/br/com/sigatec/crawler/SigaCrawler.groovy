@@ -4,6 +4,7 @@ import br.com.sigatec.business.Aluno
 import br.com.sigatec.business.Disciplina
 import br.com.sigatec.connector.SigaWebConnector
 import br.com.sigatec.exception.BlockedAccountException
+import br.com.sigatec.exception.InternalErrorException
 import br.com.sigatec.exception.InvalidPasswordException
 import br.com.sigatec.parser.SigaParser
 import org.codehaus.groovy.grails.web.json.JSONObject
@@ -31,11 +32,13 @@ class SigaCrawler {
         if(parser.isInvalidPassword(response)){
             throw new InvalidPasswordException("Não Autorizado")
         }
-        def bool = parser.isBlockedAccount(response)
-        if(bool){
+        if(parser.isBlockedAccount(response)){
             throw new BlockedAccountException("Sua conta de acesso ao sistema encontra-se com data de expiração vencida. Entrar em contato a Diretoria Acadêmica de sua Unidade.")
         }
 
+        if(!parser.isSuccess(response)){
+            throw new InternalErrorException("Erro Interno do Servidor")
+        }
     }
 
     def setAluno(Aluno aluno){
