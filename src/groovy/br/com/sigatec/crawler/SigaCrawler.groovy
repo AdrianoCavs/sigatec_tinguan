@@ -36,7 +36,7 @@ class SigaCrawler {
             throw new BlockedAccountException("Sua conta de acesso ao sistema encontra-se com data de expiração vencida. Entrar em contato a Diretoria Acadêmica de sua Unidade.")
         }
 
-        if(parser.isBlockedAccountWithAttempts()){
+        if(parser.isBlockedAccountWithAttempts(response)){
             throw new BlockedAccountException("Sua conta de acesso ao sistema encontra-se bloqueada por tentativas de acesso. Entrar em contato a Diretoria Acadêmica de sua Unidade.")
         }
 

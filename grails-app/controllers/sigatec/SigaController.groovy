@@ -3,7 +3,6 @@ package sigatec
 import br.com.sigatec.exception.BlockedAccountException
 import br.com.sigatec.exception.InternalErrorException
 import br.com.sigatec.exception.InvalidPasswordException
-import br.com.sigatec.exception.SigaException
 import grails.converters.JSON
 import org.codehaus.groovy.grails.web.json.JSONObject
 
