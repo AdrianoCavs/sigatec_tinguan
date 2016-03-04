@@ -32,8 +32,12 @@ class SigaCrawler {
         if(parser.isInvalidPassword(response)){
             throw new InvalidPasswordException("Não Autorizado")
         }
-        if(parser.isBlockedAccount(response)){
+        if(parser.isBlockedAccountWithExpiredDate(response)){
             throw new BlockedAccountException("Sua conta de acesso ao sistema encontra-se com data de expiração vencida. Entrar em contato a Diretoria Acadêmica de sua Unidade.")
+        }
+
+        if(parser.isBlockedAccountWithAttempts()){
+            throw new BlockedAccountException("Sua conta de acesso ao sistema encontra-se bloqueada por tentativas de acesso. Entrar em contato a Diretoria Acadêmica de sua Unidade.")
         }
 
         if(!parser.isSuccess(response)){

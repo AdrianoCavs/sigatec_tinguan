@@ -131,8 +131,12 @@ class SigaParser {
         return html.contains("confere Login e Senha")
     }
 
-    def isBlockedAccount(String html){
-        return html.contains("Sua conta de acesso ao sistema encontra-se bloqueada por tentativas de acesso") || html.contains("vencida. Entrar em contato")
+    def isBlockedAccountWithAttempts(String html){
+        return html.contains("Sua conta de acesso ao sistema encontra-se bloqueada por tentativas de acesso")
+    }
+
+    def isBlockedAccountWithExpiredDate(String html){
+        return html.contains("vencida. Entrar em contato")
     }
 
     def isSuccess(String html){
