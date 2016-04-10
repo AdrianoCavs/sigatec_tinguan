@@ -57,7 +57,7 @@ class SigaParserSpec extends Specification {
         assertTrue(isInvalidPassword)
     }
 
-
+    //Quebrado
     def 'extract disciplines informations'(){
         when:
         File file = new ClassPathResource("resources/aluno.json").getFile()

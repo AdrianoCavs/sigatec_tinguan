@@ -26,6 +26,9 @@ class SigaCrawler {
     private SigaParser parser
 
     def login(String login, String password){
+        if(!login || !password){
+            throw new InvalidPasswordException("Não Autorizado")
+        }
         connector.get("https://www.sigacentropaulasouza.com.br/aluno/login.aspx")
         def mapLogin = parser.parseMapLogin(login,password)
         def response = connector.post("https://www.sigacentropaulasouza.com.br/aluno/login.aspx",mapLogin)

@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Scope
  * Created by tinguan on 08/02/16.
 
  */
-@Scope("singleton")
+@Scope("request")
 class SigaParser {
 
     def parseMapLogin(login,password){
