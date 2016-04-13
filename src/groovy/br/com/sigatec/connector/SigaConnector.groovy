@@ -1,21 +1,11 @@
 package br.com.sigatec.connector
 
-import br.com.sigatec.exception.InternalErrorException
-import org.apache.commons.io.IOUtils
-import org.apache.http.HttpResponse
-import org.apache.http.NameValuePair
-import org.apache.http.client.HttpClient
-import org.apache.http.client.entity.UrlEncodedFormEntity
-import org.apache.http.client.methods.HttpGet
-import org.apache.http.client.methods.HttpPost
-import org.apache.http.client.protocol.HttpClientContext
-import org.apache.http.impl.client.HttpClientBuilder
-import org.apache.http.message.BasicNameValuePair
-import org.apache.http.protocol.BasicHttpContext
-import org.apache.http.protocol.HttpContext
-import org.apache.http.impl.client.BasicCookieStore
-import org.apache.http.client.CookieStore
+import org.jsoup.Connection
+import org.jsoup.Jsoup
 import org.springframework.context.annotation.Scope
+
+import static org.jsoup.Connection.Method.GET
+import static org.jsoup.Connection.Method.POST
 
 
 /**
@@ -24,37 +14,56 @@ import org.springframework.context.annotation.Scope
 @Scope("request")
 class SigaWebConnector {
 
+    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36";
 
-    private CookieStore cookieStore = new BasicCookieStore()
 
-    def get(String URL){
-        HttpGet httpGet = new HttpGet(URL)
-        return processRequest(httpGet)
+    public String get(String url, Map<String, String> cookies){
+        return this.processRequest(url, GET, null, cookies)
     }
 
-    def post(url, map){
-        HttpPost post = new HttpPost(url);
-        List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-
-        map.each{k,v -> urlParameters.add(new BasicNameValuePair(k,v))}
-
-        post.setEntity(new UrlEncodedFormEntity(urlParameters))
-        return processRequest(post)
-
+    public String post(String url, Map data, Map<String, String> cookies)  {
+        return this.processRequest(url, POST, data, cookies)
     }
 
-    def processRequest(method){
-        HttpContext localContext = new BasicHttpContext();
-        localContext.setAttribute(HttpClientContext.COOKIE_STORE, cookieStore)
-        HttpClient httpclient = HttpClientBuilder.create().build()
+    private String processRequest(String url, Connection.Method method, Map<String, String> data, Map<String, String> cookies) {
+        try {
+            Connection connection = Jsoup.connect(url).userAgent(USER_AGENT).followRedirects(true).ignoreContentType(true).method(method)
+                    .timeout(300000);
+            if (data != null && !data.isEmpty()) {
+                connection.data(data);
+            }
 
-        try{
-            HttpResponse response = httpclient.execute(method, localContext)
-            String body = IOUtils.toString(response.getEntity().getContent())
-            return body
-        } catch (Exception e){
-            throw new InternalErrorException("Erro Interno do Servidor")
+            connection.header("Accept-Language", "en-US,en;q=0.8,pt;q=0.6,es;q=0.4");
+
+            if (cookies != null && !cookies.isEmpty()) {
+                connection.cookies(cookies);
+            }
+            Connection.Response response = connection.execute();
+            if (response != null) {
+                if (cookies == null) {
+                    cookies = new HashMap<String, String>();
+                }
+                mergeCookies(response, cookies)
+                if (response.statusCode() == 302) {
+                    return processRequest(response.header('Location').toString(), GET, [:], cookies)
+                }
+                String body = response.body()
+                return body;
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+        return null;
+    }
+
+    private mergeCookies(Connection.Response response, Map currentCookies){
+        response.cookies().each{ key, value ->
+            if(key && value) {
+                currentCookies.put(key, value)
+            }
+            if(!value) {
+                currentCookies.remove(key)
+            }
         }
     }
-
 }
