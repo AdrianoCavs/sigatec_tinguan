@@ -38,6 +38,7 @@ class SigaService {
 
         crawler.login(login, password)
         Aluno aluno = new Aluno()
+        aluno.setRg(login)
         crawler.setAluno(aluno)
         response = ["aluno": aluno]
         response += ["disciplinas": crawler.setDisciplina()]
