@@ -17,6 +17,8 @@ import org.springframework.stereotype.Component
 @Component
 @Scope("request")
 class SigaService {
+    static scope = 'request'
+    
     @Autowired
     SigaException sigaException
 

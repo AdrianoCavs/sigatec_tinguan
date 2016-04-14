@@ -10,10 +10,12 @@ import br.com.sigatec.parser.SigaParser
 import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
 
 /**
  * Created by tinguan on 21/02/16.
  */
+@Component
 @Scope("request")
 class SigaCrawler {
     public JSONObject studentHistoryJson

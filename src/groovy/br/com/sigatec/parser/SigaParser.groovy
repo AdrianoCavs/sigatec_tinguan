@@ -10,11 +10,13 @@ import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import org.springframework.context.annotation.Scope
+import org.springframework.stereotype.Component
 
 /**
  * Created by tinguan on 08/02/16.
 
  */
+@Component
 @Scope("request")
 class SigaParser {
 
