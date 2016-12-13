@@ -14,14 +14,15 @@ import static org.jsoup.Connection.Method.POST
 @Scope("request")
 class SigaWebConnector {
 
-    private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36";
+    private static
+    final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36";
 
 
-    public String get(String url, Map<String, String> cookies){
+    public String get(String url, Map<String, String> cookies) {
         return this.processRequest(url, GET, null, cookies)
     }
 
-    public String post(String url, Map data, Map<String, String> cookies)  {
+    public String post(String url, Map data, Map<String, String> cookies) {
         return this.processRequest(url, POST, data, cookies)
     }
 
@@ -56,12 +57,12 @@ class SigaWebConnector {
         return null;
     }
 
-    private mergeCookies(Connection.Response response, Map currentCookies){
-        response.cookies().each{ key, value ->
-            if(key && value) {
+    private mergeCookies(Connection.Response response, Map currentCookies) {
+        response.cookies().each { key, value ->
+            if (key && value) {
                 currentCookies.put(key, value)
             }
-            if(!value) {
+            if (!value) {
                 currentCookies.remove(key)
             }
         }
