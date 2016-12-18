@@ -1,11 +1,7 @@
 dataSource {
     pooled = true
-    dbCreate = "update"
-    url = "jdbc:mysql://localhost/siga"
-    driverClassName = "com.mysql.jdbc.Driver"
-    dialect = "org.hibernate.dialect.MySQL5InnoDBDialect"
-    //dialect = "org.hibernate.dialect.H2Dialect"
-    username = "root"
+    driverClassName = "org.h2.Driver"
+    username = "sa"
     password = ""
 }
 hibernate {
@@ -16,15 +12,9 @@ hibernate {
 // environment specific settings
 environments {
     development {
-        /*dataSource {
+        dataSource {
             dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
             url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
-        } */
-        dataSource {
-            pooled = true
-            driverClassName = "com.mysql.jdbc.Driver"
-            dialect = org.hibernate.dialect.MySQL5InnoDBDialect
-            // other common settings here
         }
     }
     test {
@@ -36,17 +26,17 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:mysql://aach7jfm5hhgq0.cwdc9edmcxbk.us-east-1.rds.amazonaws.com:3306"
+            url = "jdbc:h2:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             pooled = true
             properties {
-                maxActive = -1
-                minEvictableIdleTimeMillis=1800000
-                timeBetweenEvictionRunsMillis=1800000
-                numTestsPerEvictionRun=3
-                testOnBorrow=true
-                testWhileIdle=true
-                testOnReturn=true
-                validationQuery="SELECT 1"
+               maxActive = -1
+               minEvictableIdleTimeMillis=1800000
+               timeBetweenEvictionRunsMillis=1800000
+               numTestsPerEvictionRun=3
+               testOnBorrow=true
+               testWhileIdle=true
+               testOnReturn=true
+               validationQuery="SELECT 1"
             }
         }
     }

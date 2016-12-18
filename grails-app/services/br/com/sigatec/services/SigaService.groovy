@@ -12,17 +12,13 @@ import org.codehaus.groovy.grails.web.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
-import sigatec.ClassSubject
-import sigatec.Institution
-import sigatec.Student
-import sigatec.StudentGradeClassSubject
 
 
 @Component
 @Scope("request")
 class SigaService {
     static scope = 'request'
-
+    
     @Autowired
     SigaException sigaException
 
@@ -36,7 +32,7 @@ class SigaService {
     private SigaCrawler crawler
 
     @Autowired
-    public SigaService() {
+    public SigaService (){
     }
 
     def auth(String login, String password) {
@@ -47,32 +43,9 @@ class SigaService {
         aluno.setRg(login)
         crawler.setAluno(aluno)
         response = ["aluno": aluno]
-        List<Disciplina> disciplinas = crawler.setDisciplina()
-        response += ["disciplinas": disciplinas]
+        response += ["disciplinas": crawler.setDisciplina()]
 
-
-        try {
-            Institution institution = Institution.findByName(aluno.faculdade)
-            if(!institution){
-                institution = new Institution(name: aluno.faculdade).save(failOnError: true)
-            }
-
-            Student student = Student.findByName(aluno.nome)
-            if(!student){
-                new Student(name: aluno.nome, institution: institution).save(failOnError: true)
-            }
-
-
-            for (Disciplina disciplina : disciplinas) {
-                ClassSubject classSubject = ClassSubject.findBySubject(disciplina.nome)
-                if(!classSubject){
-                    classSubject = new ClassSubject(subject: disciplina.nome).save(failOnError: true)
-                }
-                new StudentGradeClassSubject(student: student, p1: disciplina.notas.get(0).nota.toDouble(), p2: disciplina.notas.get(1).nota.toDouble(), p3: disciplina.notas.get(2).nota.toDouble(), abscencePercentage: disciplina.porcentagemAusencia.toDouble(), classSubject: classSubject).save(failOnError: true)
-            }
-        } catch (Exception e) {
-            //shiu
-        }
         return response
+
     }
 }
