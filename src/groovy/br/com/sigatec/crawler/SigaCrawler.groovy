@@ -37,9 +37,9 @@ class SigaCrawler {
         if(!login || !password){
             throw new InvalidPasswordException("Não Autorizado")
         }
-        def html = connector.get("https://www.sigacentropaulasouza.com.br/aluno/login.aspx", cookies)
+        def html = connector.get("https://siga.cps.sp.gov.br/aluno/login.aspx", cookies)
         def mapLogin = parser.parseMapLogin(login, password, html)
-        def response = connector.post("https://www.sigacentropaulasouza.com.br/aluno/login.aspx",mapLogin, cookies)
+        def response = connector.post("https://siga.cps.sp.gov.br/aluno/login.aspx",mapLogin, cookies)
         if(parser.isInvalidPassword(response)){
             throw new InvalidPasswordException("Não Autorizado")
         }
@@ -57,7 +57,7 @@ class SigaCrawler {
     }
 
     def setAluno(Aluno aluno){
-        def gradesPage = connector.get("https://www.sigacentropaulasouza.com.br/aluno/notasparciais.aspx", cookies)
+        def gradesPage = connector.get("https://siga.cps.sp.gov.br/aluno/notasparciais.aspx", cookies)
         this.studentHistoryJson = parser.extractJsonStudentHistory(gradesPage)
         parser.extractStudentBasicInformations(aluno, this.studentHistoryJson)
 
@@ -65,8 +65,8 @@ class SigaCrawler {
     }
 
     def setDisciplina(){
-        def abscencePage = connector.get("https://www.sigacentropaulasouza.com.br/aluno/faltasparciais.aspx", cookies)
-        def gradesClasses = connector.get("https://www.sigacentropaulasouza.com.br/aluno/historicograde.aspx", cookies)
+        def abscencePage = connector.get("https://siga.cps.sp.gov.br/aluno/faltasparciais.aspx", cookies)
+        def gradesClasses = connector.get("https://siga.cps.sp.gov.br/aluno/historicograde.aspx", cookies)
         def studentAbsencesJson = parser.extractJsonStudentHistory(abscencePage)
         List<Disciplina> disciplina = parser.extractDisciplines(this.studentHistoryJson, studentAbsencesJson, gradesClasses)
         return disciplina

@@ -40,7 +40,7 @@ grails.project.dependency.resolution = {
 
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-        runtime 'org.jsoup:jsoup:1.8.1'
+        runtime 'org.jsoup:jsoup:1.11.2'
         compile 'org.apache.httpcomponents:httpclient:4.5.1'
         test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
         compile "commons-io:commons-io:2.2"

@@ -27,7 +27,7 @@ class SigaWebConnector {
 
     private String processRequest(String url, Connection.Method method, Map<String, String> data, Map<String, String> cookies) {
         try {
-            Connection connection = Jsoup.connect(url).userAgent(USER_AGENT).followRedirects(true).ignoreContentType(true).method(method)
+            Connection connection = Jsoup.connect(url).userAgent(USER_AGENT).followRedirects(true).ignoreContentType(true).method(method).validateTLSCertificates(false)
                     .timeout(300000);
             if (data != null && !data.isEmpty()) {
                 connection.data(data);
